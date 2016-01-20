@@ -1,11 +1,12 @@
 public class Beat{ 
   float x;
   float y;
-  float radian; //for checking collide
-  
   float radius;
+  color c;
   
-  boolean active;
+  float radian; //for checking collide
+  boolean active; //place on ring or not
+  
   AudioPlayer sound;
 
   
@@ -15,6 +16,7 @@ public class Beat{
     this.radian = radian;
     this.radius = radius;
     active = true;
+    println(radian);
   }
 
   public Beat(float x, float y, float radian, float radius, String sound){
@@ -43,7 +45,22 @@ public class Beat{
     this.sound = minim.loadFile(sound);
   }
   
+  public void setColor(color c){
+    this.c = c;
+  }
+  public void play(){
+    c = color(255,0,0);
+  }
+  
+  public void check(float radian){
+    if(this.radian == radian
+        || this.radian == 0 && radian == 6.28){
+      play();
+    }
+  }
   public void draw(){
+    fill(c);
     ellipse(x,y,radius,radius);
+    fill(drawColor);
   }
 }

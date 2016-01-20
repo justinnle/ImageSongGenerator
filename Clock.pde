@@ -3,7 +3,7 @@ public class Clock{
   float y;
   float radius;
   
-  PVector needle;
+  float needle;
   ArrayList<Ring> rings;
   
   public Clock(){
@@ -12,7 +12,7 @@ public class Clock{
     y = height/2;
     radius = width/2 - defaultBeatSize; //visual buffer
     addRing(new Ring(radius,0));
-    needle = new PVector(0,0);
+    needle = 0;
   }
 
   public void addRing(Ring r){
@@ -22,21 +22,27 @@ public class Clock{
   public ArrayList<Ring> getRings(){
     return rings;
   }
-  public void setNeedle(PVector needle){
+  public void setNeedle(float needle){
     this.needle = needle;
   }
   public void setNeedle(float x, float y){
-    needle.set(x,y);
+    //needle.set(x,y);
   }
   public void incNeedle(float amount){
-    needle.x += amount;
-    needle.y += amount;
+    needle += amount;
+    needle = needle % TWO_PI;
+  }
+  
+  public void check(){
+    for(Ring r : rings){
+      r.check(round(needle,2));
+    }
   }
   public void draw(){
     for(Ring r : rings){
       r.draw();
     }
-    line(x,y,x + radius * cos(needle.x),y + radius*sin(needle.y));
+    line(x,y,x + radius * cos(needle),y + radius*sin(needle));
   }
   
 }

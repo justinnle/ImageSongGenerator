@@ -4,6 +4,9 @@ boolean debug;
 Minim minim;
 Clock clock;
 float defaultBeatSize;
+float needleInc; //time
+
+color drawColor;
 
 public void setup(){
   size(300,300);
@@ -12,11 +15,15 @@ public void setup(){
   defaultBeatSize = 10;
   clock = new Clock();
   clock.addRing(new Ring(50,3));
+  needleInc = TWO_PI/360;
+  drawColor = color(255,255,255);
 }
 
 public void draw(){
   background(155);
-  clock.incNeedle(TWO_PI/360);
+  println(clock.needle);
+  clock.incNeedle(needleInc);
+  clock.check();
   clock.draw();
 }
 
