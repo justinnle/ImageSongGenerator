@@ -16,16 +16,25 @@ public class Ring{
     this.radius = radius;
     this.numBeats = numBeats;
     beats = new ArrayList<Beat>();
-    defaultBeatDistribution();
+    defaultBeatDistribution("");
+  }
+  public Ring(float radius, int numBeats, String sound){
+    this.radius = radius;
+    this.numBeats = numBeats;
+    beats = new ArrayList<Beat>();
+    defaultBeatDistribution(sound);
+    
   }
   
-  public void defaultBeatDistribution(){
+  public void defaultBeatDistribution(String sound){
     for(int ii=0;ii<numBeats;ii++){
       float rad = TWO_PI /numBeats * ii;
       beats.add(new Beat(radius * cos(rad) + width/2, //x
                          radius * sin(rad) + height/2, //x
                          round(rad,2),//radian rounded to 10
-                         defaultBeatSize));//radius
+                         defaultBeatSize,//radius
+                         sound)//sound
+                         );
       beats.get(ii).setColor(color(255,255,255));                         
                          
     }//eo for
@@ -34,6 +43,12 @@ public class Ring{
   
   public ArrayList<Beat> getBeats(){
     return beats;
+  }
+  
+  public void toggleActive(int ... indices){
+    for(int i : indices){
+      beats.get(i).toggleActive();
+    }
   }
   
   public void check(float radian){

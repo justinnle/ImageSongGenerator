@@ -5,6 +5,7 @@ public class Beat{
   color c;
   
   int timer; //animation purposes
+  int pulseLength = 20; //length of pulse
   boolean animating;
   
   float radian; //for checking collide
@@ -27,7 +28,11 @@ public class Beat{
     this.y = y;
     this.radian = radian;
     this.radius = radius;
-    this.sound = minim.loadFile(sound);
+    try{
+      this.sound = minim.loadFile(sound);
+    }catch(Exception e){
+      println("Could not find file");
+    }
     active = true;
     timer = 0;
   }
@@ -37,8 +42,8 @@ public class Beat{
     this.y = y;
   }
   
-  public void setActive(boolean active){
-    this.active = active;
+  public void toggleActive(){
+    this.active = !active;
   }
   
   public void setSound(AudioPlayer sound){
@@ -58,29 +63,31 @@ public class Beat{
   }
   
   public void check(float radian){
-    if(this.radian == radian
+    if(active && (this.radian == radian
         || this.radian == 0 && radian == 6.28
         || this.radian == radian + .01
-        || this.radian == radian - .01){ //account for error
+        || this.radian == radian - .01)){ //account for error
       play();
     }
   }
   
   
   public void draw(){
-    if(animating){
-      timer += 1;
-      if(timer < 10){
-        c = color(red(c),green(c),blue(c),alpha(c)*.9);
-      } else if(timer < 20){
-        c = color(red(c),green(c),blue(c),alpha(c)*1.1);
-      } else{
-        timer = 0;
-        animating = false;
+    if(active){
+      if(animating){
+        timer += 1;
+        if(timer < pulseLength/2){
+          c = color(red(c),green(c),blue(c),alpha(c)*.9);
+        } else if(timer < pulseLength){
+          c = color(red(c),green(c),blue(c),alpha(c)*1.1);
+        } else{
+          timer = 0;
+          animating = false;
+        }
       }
+      fill(c);
+      ellipse(x,y,radius,radius);
+      fill(drawColor);
     }
-    fill(c);
-    ellipse(x,y,radius,radius);
-    fill(drawColor);
   }
 }

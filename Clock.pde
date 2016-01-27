@@ -33,6 +33,9 @@ public class Clock{
     needle = needle % TWO_PI;
   }
   
+  public void toggleActive(int ring, int ... beats){
+    rings.get(ring).toggleActive(beats);
+  }
   public void check(){
     for(Ring r : rings){
       r.check(round(needle,2));

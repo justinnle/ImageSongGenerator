@@ -1,3 +1,4 @@
+//sounds from http://sampleswap.org/filebrowser-new.php
 import ddf.minim.*;
 boolean debug;
 
@@ -16,6 +17,7 @@ public void setup(){
   clock = new Clock();
   clock.addRing(new Ring(35,4));
   clock.addRing(new Ring(70,8));
+  clock.toggleActive(1,1,3);
   needleInc = TWO_PI/360;
   drawColor = color(255,255,255);
   println(clock.rings.size());
