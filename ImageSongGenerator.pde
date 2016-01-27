@@ -14,14 +14,16 @@ public void setup(){
   minim = new Minim(this);
   defaultBeatSize = 10;
   clock = new Clock();
-  clock.addRing(new Ring(50,3));
+  clock.addRing(new Ring(35,4));
+  clock.addRing(new Ring(70,8));
   needleInc = TWO_PI/360;
   drawColor = color(255,255,255);
+  println(clock.rings.size());
 }
 
 public void draw(){
   background(155);
-  println(clock.needle);
+  //println(clock.needle + " ");
   clock.incNeedle(needleInc);
   clock.check();
   clock.draw();

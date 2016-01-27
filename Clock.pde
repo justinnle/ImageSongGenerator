@@ -11,7 +11,7 @@ public class Clock{
     x = width/2;
     y = height/2;
     radius = width/2 - defaultBeatSize; //visual buffer
-    addRing(new Ring(radius,0));
+    addRing(new Ring(radius,0)); // outline
     needle = 0;
   }
 
@@ -40,6 +40,7 @@ public class Clock{
   }
   public void draw(){
     for(Ring r : rings){
+      noFill();
       r.draw();
     }
     line(x,y,x + radius * cos(needle),y + radius*sin(needle));
