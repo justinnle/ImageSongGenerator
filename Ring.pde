@@ -35,6 +35,7 @@ public class Ring{
                          defaultBeatSize,//radius
                          sound)//sound
                          );
+     
       beats.get(ii).setColor(color(255,255,255));                         
                          
     }//eo for

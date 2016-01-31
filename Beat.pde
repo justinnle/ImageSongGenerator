@@ -11,7 +11,8 @@ public class Beat{
   float radian; //for checking collide
   boolean active; //place on ring or not
   
-  AudioPlayer sound;
+  String name;
+  AudioSample sound;
 
   
   public Beat(float x, float y, float radian, float radius){
@@ -28,8 +29,9 @@ public class Beat{
     this.y = y;
     this.radian = radian;
     this.radius = radius;
+    name = sound;
     try{
-      this.sound = minim.loadFile(sound);
+      this.sound = minim.loadSample(sound);
     }catch(Exception e){
       println("Could not find file");
     }
@@ -46,27 +48,30 @@ public class Beat{
     this.active = !active;
   }
   
-  public void setSound(AudioPlayer sound){
+  public void setSound(AudioSample sound){
     this.sound = sound;
   }
   
   public void setSound(String sound){
-    this.sound = minim.loadFile(sound);
+    this.sound = minim.loadSample(sound);
   }
   
   public void setColor(color c){
     this.c = c;
   }
   public void play(){
+    if(debug){
+      println("Playing : " + name);
+    }
     c = color(255,0,0);
     animating = true;
+    sound.trigger();
   }
   
   public void check(float radian){
     if(active && (this.radian == radian
         || this.radian == 0 && radian == 6.28
-        || this.radian == radian + .01
-        || this.radian == radian - .01)){ //account for error
+        || (this.radian > radian && this.radian < radian + needleInc))){ //for imperfect timing/spacing of beats
       play();
     }
   }
