@@ -21,12 +21,14 @@ public void setup(){
   image = loadImage("images/aurora space dialogue.png");
   
   defaultBeatSize = 10;
-  clock = new Clock();
-  clock.addRing(new Ring(50,4, "sounds/drums/kicks/808bd.aif"));
+  clock = new Clock(2,2);
+  //clock.addRing(new Ring(40,4, "sounds/drums/kicks/808bd.aif"));
+  
   //clock.addRing(new Ring(35,4));
   //clock.addRing(new Ring(70,8));
   //clock.toggleActive(1,1,3);
-  needleInc = TWO_PI/360 * 1;
+  needleInc = TWO_PI * processingTick;//TWO_PI/360 * 3;//radians moved
+  print(needleInc);
   drawColor = color(255,255,255);
 }
 
@@ -45,12 +47,13 @@ public void draw(){
     if(timerEnd - timerStart >= calibrationTime){
       calibrateUpdateTimer = false;
       processingTick = (timerEnd - timerStart) / updateTimer;
+      needleInc = TWO_PI * processingTick;
       println("\nCalibration finished : " + processingTick + "s per processing tick ");
     }
   }
   if(playing && !calibrateUpdateTimer){
-    clock.incNeedle(needleInc);
     clock.check();
+    clock.incNeedle(needleInc);
   }
   clock.draw();
 }

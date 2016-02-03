@@ -1,7 +1,8 @@
-public float round(float value, int place){
-  float output = (float)(value * Math.pow(10,place));
+int roundAccuracy = 3;
+public float roundRadian(float value){
+  float output = (float)(value * Math.pow(10,roundAccuracy));
   output = (float)(Math.round(output));
-  output /= Math.pow(10,place);
+  output /= Math.pow(10,roundAccuracy);
   return output;
 }
 
@@ -17,4 +18,10 @@ public void calibrateUpdateTimer(int seconds){
   timerEnd = -1; //just in case for printing stuffs
   updateTimer = 0;
   calibrationTime = seconds;
+}
+
+public float calculateBPM(){
+  float output = 120;
+  
+  return 0;
 }

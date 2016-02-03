@@ -1,6 +1,6 @@
 public class Ring{
   float radius;
-  
+  float rotation;
   int numBeats;
   ArrayList<Beat> beats;
   
@@ -12,15 +12,26 @@ public class Ring{
   public Ring(int numBeats){
     this.numBeats = numBeats;
   }
-  public Ring(float radius, int numBeats){
-    this.radius = radius;
-    this.numBeats = numBeats;
-    beats = new ArrayList<Beat>();
-    defaultBeatDistribution("");
-  }
+  
   public Ring(float radius, int numBeats, String sound){
     this.radius = radius;
     this.numBeats = numBeats;
+    rotation = 0;
+    beats = new ArrayList<Beat>();
+    defaultBeatDistribution(sound);
+  }
+  
+  public Ring(float radius, int numBeats, float rotation){
+    this.radius = radius;
+    this.numBeats = numBeats;
+    this.rotation = rotation;
+    beats = new ArrayList<Beat>();
+    defaultBeatDistribution("");
+  }
+  public Ring(float radius, int numBeats, float rotation, String sound){
+    this.radius = radius;
+    this.numBeats = numBeats;
+    this.rotation = rotation;
     beats = new ArrayList<Beat>();
     defaultBeatDistribution(sound);
     
@@ -28,10 +39,10 @@ public class Ring{
   
   public void defaultBeatDistribution(String sound){
     for(int ii=0;ii<numBeats;ii++){
-      float rad = TWO_PI /numBeats * ii;
+      float rad = TWO_PI /numBeats * ii + rotation;
       beats.add(new Beat(radius * cos(rad) + width/2, //x
                          radius * sin(rad) + height/2, //x
-                         round(rad,2),//radian rounded to 10
+                         roundRadian(rad),//radian rounded to 10
                          defaultBeatSize,//radius
                          sound)//sound
                          );

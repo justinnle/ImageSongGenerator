@@ -6,13 +6,27 @@ public class Clock{
   float needle;
   ArrayList<Ring> rings;
   
+  int timeSignature;
+  //two rings below 40 for perc/beat 
+  
   public Clock(){
     rings = new ArrayList<Ring>();
     x = width/2;
     y = height/2;
     radius = width/2 - defaultBeatSize; //visual buffer
-    addRing(new Ring(radius,0)); // outline
+    addRing(new Ring(radius,0,0)); // outline
     needle = 0;
+  }
+  public Clock(int timeSignature1, int timeSignature2){
+    rings = new ArrayList<Ring>();
+    x = width/2;
+    y = height/2;
+    radius = width/2 - defaultBeatSize; //visual buffer
+    addRing(new Ring(radius,0,0)); // outline
+    needle = 0;
+    this.timeSignature = timeSignature1 + timeSignature2;
+    addRing(new Ring(20,timeSignature1,"sounds/drums/kicks/808bd.aif"));
+    addRing(new Ring(30,timeSignature2,TWO_PI/4,"sounds/drums/snares/909sd.aif"));
   }
 
   public void addRing(Ring r){
@@ -38,7 +52,7 @@ public class Clock{
   }
   public void check(){
     for(Ring r : rings){
-      r.check(round(needle,2));
+      r.check(roundRadian(needle));
     }
   }
   public void draw(){

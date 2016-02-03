@@ -69,9 +69,11 @@ public class Beat{
   }
   
   public void check(float radian){
+    radian = radian % TWO_PI;
     if(active && (this.radian == radian
-        || this.radian == 0 && radian == 6.28
-        || (this.radian > radian && this.radian < radian + needleInc))){ //for imperfect timing/spacing of beats
+        || this.radian == 0 && radian == roundRadian(TWO_PI)
+        || (this.radian > radian && this.radian < radian + needleInc))){ //for imperfect timing/spacing of beats 
+        //TODO check for TWO_PI to 0 reset
       play();
     }
   }
